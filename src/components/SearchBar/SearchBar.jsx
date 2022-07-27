@@ -12,6 +12,7 @@ export class SearchBar extends Component {
   };
   onSubmit = evt => {
     evt.preventDefault();
+
     if (this.state.searchedItem.trim() === '') {
       toast.warn(' Please, type something.', {
         theme: 'colored',
