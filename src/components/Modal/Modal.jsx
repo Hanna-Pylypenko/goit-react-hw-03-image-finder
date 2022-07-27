@@ -6,7 +6,7 @@ export class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keydown', e => {
       console.log(e.code);
-      if (e.key === 'Escape') {
+      if (e.code === 'Escape') {
         this.props.toggleModal();
       }
     });
