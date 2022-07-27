@@ -4,22 +4,24 @@ import { Component } from 'react';
 
 export class ImageGalleryItem extends Component {
   state = {
-    modalOpen: false,
+    modalOpen: 'closed',
   };
   toggleModal = () => {
-    this.setState(({ modalOpen }) => ({ modalOpen: !modalOpen }));
-  };
-  stateChanger = value => {
-    this.setState({ modalOpen: value });
+    if (this.state.modalOpen === 'closed') {
+      this.setState({ modalOpen: 'opened' });
+    }
+    if (this.state.modalOpen === 'opened') {
+      this.setState({ modalOpen: 'closed' });
+    }
   };
   render() {
     const { alt, src, modalImage } = this.props;
     return (
       <li className={css.galleryItem} onClick={this.toggleModal}>
         <img src={src} alt={alt} />
-        {this.state.modalOpen && (
+        {this.state.modalOpen === 'opened' && (
           <Modal
-            toggleModal={this.stateChanger}
+            toggleModal={this.toggleModal}
             modalImage={modalImage}
             alt={alt}
           />
