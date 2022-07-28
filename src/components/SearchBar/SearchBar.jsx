@@ -15,10 +15,7 @@ export class SearchBar extends Component {
     evt.preventDefault();
 
     if (this.state.searchedItem.trim() === '') {
-      toast.warn(' Please, type something.', {
-        theme: 'colored',
-        fontSize: '20px',
-      });
+      toast.warn(' Please, type something.');
       return;
     }
     if (this.state.searchedItem.trim()) {
