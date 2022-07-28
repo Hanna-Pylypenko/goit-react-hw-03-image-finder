@@ -16,6 +16,7 @@ export class ImageGallery extends Component {
         loading: true,
         searchedItemsCollection: [],
         pageNumber: 1,
+        leftToLoad: 0,
       });
       setTimeout(() => {
         fetch(
@@ -24,6 +25,7 @@ export class ImageGallery extends Component {
           .then(response => response.json())
           .then(res => {
             this.setState({
+              leftToLoad: res.totalHits - res.hits.length,
               searchedItemsCollection: res.hits,
             });
           })
@@ -36,8 +38,8 @@ export class ImageGallery extends Component {
       )
         .then(response => response.json())
         .then(res => {
-          console.log(res);
           this.setState(prevState => ({
+            leftToLoad: prevState.leftToLoad - res.hits.length,
             searchedItemsCollection: [
               ...prevState.searchedItemsCollection,
               ...res.hits,
@@ -88,9 +90,7 @@ export class ImageGallery extends Component {
             }
           )}
         </ul>
-        {this.state.searchedItemsCollection.length > 11 && (
-          <Button onClick={this.onClick} />
-        )}
+        {this.state.leftToLoad > 12 && <Button onClick={this.onClick} />}
       </div>
     );
   }
