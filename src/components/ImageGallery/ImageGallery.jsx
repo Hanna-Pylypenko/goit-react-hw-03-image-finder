@@ -10,7 +10,7 @@ export class ImageGallery extends Component {
     pageNumber: 1,
     loading: false,
   };
-  componentDidUpdate(prevProps, _) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchedItem !== this.props.searchedItem) {
       this.setState({
         loading: true,
@@ -34,9 +34,23 @@ export class ImageGallery extends Component {
           .finally(() => this.setState({ loading: false }));
       }, 2000);
     }
+    if (prevState.pageNumber !== this.state.pageNumber) {
+      fetch(
+        `https://pixabay.com/api/?q=${this.props.searchedItem}&page=${this.state.pageNumber}&key=27847639-8e847d0d7182257a527cf2e5a&image_type=photo&orientation=horizontal&per_page=12`
+      )
+        .then(response => response.json())
+        .then(res => {
+          this.setState(prevState => ({
+            searchedItemsCollection: [
+              ...prevState.searchedItemsCollection,
+              ...res.hits,
+            ],
+          }));
+        });
+    }
   }
-  onClick = page => {
-    this.setState({ pageNumber: page });
+  onClick = data => {
+    this.setState(prevState => ({ pageNumber: prevState.pageNumber + data }));
   };
 
   render() {
@@ -78,7 +92,7 @@ export class ImageGallery extends Component {
           )}
         </ul>
         {this.state.searchedItemsCollection.length > 11 && (
-          <Button pageNumber={this.state.pageNumber} onClick={this.onClick} />
+          <Button onClick={this.onClick} />
         )}
       </div>
     );
