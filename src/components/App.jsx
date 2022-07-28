@@ -31,12 +31,7 @@ export class App extends Component {
       >
         <SearchBar onSubmit={this.onSubmit} />
 
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          theme="colored"
-          fontSize="20px"
-        />
+        <ToastContainer className="toastContainer" />
         <ImageGallery searchedItem={this.state.searchedItem} />
       </div>
     );

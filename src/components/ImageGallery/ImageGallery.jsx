@@ -70,12 +70,14 @@ export class ImageGallery extends Component {
       >
         {this.state.loading && (
           <ThreeDots
-            height="80"
-            width="80"
-            radius="9"
-            color="green"
-            wrapperStyle="true"
-            wrapperClass="true"
+            style={{
+              height: '80',
+              width: '80',
+              radius: '9',
+              color: 'green',
+              wrapperStyle: 'true',
+              wrapperClass: 'true',
+            }}
           />
         )}
         <ul className={css.gallery}>
