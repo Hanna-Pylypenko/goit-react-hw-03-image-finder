@@ -9,6 +9,7 @@ export class ImageGallery extends Component {
     searchedItemsCollection: [],
     pageNumber: 1,
     loading: false,
+    leftToLoad: 0,
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchedItem !== this.props.searchedItem) {
@@ -53,6 +54,7 @@ export class ImageGallery extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <div
         style={{
@@ -90,7 +92,7 @@ export class ImageGallery extends Component {
             }
           )}
         </ul>
-        {this.state.leftToLoad > 11 && <Button onClick={this.onClick} />}
+        {!this.state.leftToLoad <= 0 && <Button onClick={this.onClick} />}
       </div>
     );
   }
