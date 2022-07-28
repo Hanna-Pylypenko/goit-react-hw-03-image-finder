@@ -75,8 +75,6 @@ export class ImageGallery extends Component {
               width: '80',
               radius: '9',
               color: 'green',
-              wrapperStyle: 'true',
-              wrapperClass: 'true',
             }}
           />
         )}
