@@ -36,6 +36,7 @@ export class ImageGallery extends Component {
       )
         .then(response => response.json())
         .then(res => {
+          console.log(res);
           this.setState(prevState => ({
             searchedItemsCollection: [
               ...prevState.searchedItemsCollection,
@@ -78,7 +79,7 @@ export class ImageGallery extends Component {
             ({ id, webformatURL, tags, largeImageURL }) => {
               return (
                 <ImageGalleryItem
-                  key={id}
+                  key={id.toString()}
                   src={webformatURL}
                   alt={tags}
                   modalImage={largeImageURL}
