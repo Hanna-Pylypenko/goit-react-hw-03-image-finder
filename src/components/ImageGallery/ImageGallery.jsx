@@ -3,10 +3,10 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import { Button } from 'components/Button/Button';
 import { ThreeDots } from 'react-loader-spinner';
+import PropTypes from 'prop-types';
 export class ImageGallery extends Component {
   state = {
     searchedItemsCollection: [],
-    totalItems: 0,
     pageNumber: 1,
     loading: false,
   };
@@ -24,7 +24,6 @@ export class ImageGallery extends Component {
           .then(res => {
             this.setState({
               searchedItemsCollection: res.hits,
-              totalItems: res.totalHits - 12,
             });
           })
           // .catch(error => this.setState({ error: error }))
@@ -42,14 +41,12 @@ export class ImageGallery extends Component {
     )
       .then(res => res.json())
       .then(res => {
-        console.log(this.state);
         this.setState(prevState => ({
           pageNumber: prevState.pageNumber + 1,
           searchedItemsCollection: [
             ...prevState.searchedItemsCollection,
             ...res.hits,
           ],
-          totalItems: prevState.totalItems - res.hits.length,
         }));
       });
   };
@@ -99,3 +96,7 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  searchedItem: PropTypes.string.isRequired,
+};
