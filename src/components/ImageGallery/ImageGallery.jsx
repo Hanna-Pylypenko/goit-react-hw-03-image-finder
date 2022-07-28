@@ -90,7 +90,7 @@ export class ImageGallery extends Component {
             }
           )}
         </ul>
-        {this.state.leftToLoad > 12 && <Button onClick={this.onClick} />}
+        {this.state.leftToLoad > 11 && <Button onClick={this.onClick} />}
       </div>
     );
   }
