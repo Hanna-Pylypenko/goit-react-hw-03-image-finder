@@ -12,10 +12,14 @@ export class ImageGallery extends Component {
   };
   componentDidUpdate(prevProps, _) {
     if (prevProps.searchedItem !== this.props.searchedItem) {
-      this.setState({ loading: true, searchedItemsCollection: [] });
+      this.setState({
+        loading: true,
+        searchedItemsCollection: [],
+        pageNumber: 1,
+      });
       setTimeout(() => {
         fetch(
-          `https://pixabay.com/api/?q=${this.props.searchedItem}&page=1&key=27847639-8e847d0d7182257a527cf2e5a&image_type=photo&orientation=horizontal&per_page=12`
+          `https://pixabay.com/api/?q=${this.props.searchedItem}&page=${this.state.pageNumber}&key=27847639-8e847d0d7182257a527cf2e5a&image_type=photo&orientation=horizontal&per_page=12`
         )
           .then(
             response => response.json()
@@ -29,26 +33,10 @@ export class ImageGallery extends Component {
           // .catch(error => this.setState({ error: error }))
           .finally(() => this.setState({ loading: false }));
       }, 2000);
-
-      this.setState(prevState => ({
-        pageNumber: prevState.pageNumber + 1,
-      }));
     }
   }
-  onClick = () => {
-    fetch(
-      `https://pixabay.com/api/?q=${this.props.searchedItem}&page=${this.state.pageNumber}&key=27847639-8e847d0d7182257a527cf2e5a&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then(res => res.json())
-      .then(res => {
-        this.setState(prevState => ({
-          pageNumber: prevState.pageNumber + 1,
-          searchedItemsCollection: [
-            ...prevState.searchedItemsCollection,
-            ...res.hits,
-          ],
-        }));
-      });
+  onClick = page => {
+    this.setState({ pageNumber: page });
   };
 
   render() {
@@ -90,7 +78,7 @@ export class ImageGallery extends Component {
           )}
         </ul>
         {this.state.searchedItemsCollection.length > 11 && (
-          <Button onClick={this.onClick} />
+          <Button pageNumber={this.state.pageNumber} onClick={this.onClick} />
         )}
       </div>
     );
