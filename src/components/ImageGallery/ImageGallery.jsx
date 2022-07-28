@@ -21,16 +21,12 @@ export class ImageGallery extends Component {
         fetch(
           `https://pixabay.com/api/?q=${this.props.searchedItem}&page=${this.state.pageNumber}&key=27847639-8e847d0d7182257a527cf2e5a&image_type=photo&orientation=horizontal&per_page=12`
         )
-          .then(
-            response => response.json()
-            // return Promise.reject(new Error('Not found'));
-          )
+          .then(response => response.json())
           .then(res => {
             this.setState({
               searchedItemsCollection: res.hits,
             });
           })
-          // .catch(error => this.setState({ error: error }))
           .finally(() => this.setState({ loading: false }));
       }, 2000);
     }
